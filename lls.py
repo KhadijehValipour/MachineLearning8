@@ -1,17 +1,30 @@
 import numpy as np
-import numpy.linalg as inv
-
 class LinearLeastSquare :
+
     def __init__(self):
-        self.w = None
+
+        self.W = None
 
     def fit(self , X_train , Y_train):
         # train 
-        self.w = inv(X_train.T @ X_train) @ X_train.T @ Y_train
+        self.W = np.matmul(np.matmul(np.linalg.inv( np.matmul(X_train.T , X_train )) , X_train.T) , Y_train )
 
     def predict(self , X_test) :
-        Y_pred = X_test @ self.w
+
+        Y_pred = np.matmul(X_test,self.W)
         return Y_pred
     
-    def evaluate(self , X_test , Y_test):
-        pass
+    
+    def evaluate(self , X_test , Y_test , metric ):
+
+        Y_pred = self.predict(X_test)
+        error = Y_test - Y_pred
+
+        if metric == "mae" :
+            loss = np.sum(np.abs(error)) / len(Y_test)
+
+        elif  metric == "mse" :
+            loss = np.sum((error) ** 2) / len(Y_test)
+
+
+        return loss
