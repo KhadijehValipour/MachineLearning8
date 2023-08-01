@@ -1,4 +1,5 @@
 import numpy as np
+
 class LinearLeastSquare :
 
     def __init__(self):
@@ -7,6 +8,7 @@ class LinearLeastSquare :
 
     def fit(self , X_train , Y_train):
         # train 
+
         self.W = np.matmul(np.matmul(np.linalg.inv( np.matmul(X_train.T , X_train )) , X_train.T) , Y_train )
 
     def predict(self , X_test) :
