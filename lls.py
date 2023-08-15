@@ -16,12 +16,16 @@ class LinearLeastSquare :
     def evaluate(self , X_test , Y_test , metric ):
         Y_pred = self.predict(X_test)
         error = Y_test - Y_pred
+        global loss
 
         if metric == "mae" :
             loss = np.sum(np.abs(error)) / len(Y_test)
 
         elif  metric == "mse" :
             loss = np.sum((error) ** 2) / len(Y_test)
+
+        elif metric == "rmse" :
+            loss =  np.sqrt(np.sum((error) ** 2) / len(Y_test))
 
 
         return loss
